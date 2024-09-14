@@ -1,0 +1,88 @@
+diff --git a/src/backend/optimizer/plan/planmain.c b/src/backend/optimizer/plan/planmain.c
+index 7afd434c60..c115e53315 100644
+--- a/src/backend/optimizer/plan/planmain.c
++++ b/src/backend/optimizer/plan/planmain.c
+@@ -22,6 +22,7 @@
+ 
+ #include "optimizer/appendinfo.h"
+ #include "optimizer/clauses.h"
++#include "optimizer/constrexcl.h"
+ #include "optimizer/inherit.h"
+ #include "optimizer/optimizer.h"
+ #include "optimizer/orclauses.h"
+diff --git a/src/backend/optimizer/util/Makefile b/src/backend/optimizer/util/Makefile
+index 4fb115cb11..1dede12757 100644
+--- a/src/backend/optimizer/util/Makefile
++++ b/src/backend/optimizer/util/Makefile
+@@ -15,6 +15,7 @@ include $(top_builddir)/src/Makefile.global
+ OBJS = \
+ 	appendinfo.o \
+ 	clauses.o \
++	constrexcl.o \
+ 	inherit.o \
+ 	joininfo.o \
+ 	orclauses.o \
+diff --git a/src/backend/optimizer/util/clauses.c b/src/backend/optimizer/util/clauses.c
+index 62650995cb..55388ce796 100644
+--- a/src/backend/optimizer/util/clauses.c
++++ b/src/backend/optimizer/util/clauses.c
+@@ -36,6 +36,7 @@
+ #include "nodes/subscripting.h"
+ #include "nodes/supportnodes.h"
+ #include "optimizer/clauses.h"
++#include "optimizer/constrexcl.h"
+ #include "optimizer/cost.h"
+ #include "optimizer/optimizer.h"
+ #include "optimizer/plancat.h"
+diff --git a/src/backend/optimizer/util/constrexcl.c b/src/backend/optimizer/util/constrexcl.c
+new file mode 100644
+index 0000000000..e8cfe09f6d
+--- /dev/null
++++ b/src/backend/optimizer/util/constrexcl.c
+@@ -0,0 +1,29 @@
++#include "postgres.h"
++
++#include "catalog/pg_operator.h"
++#include "nodes/makefuncs.h"
++#include "nodes/pg_list.h"
++#include "optimizer/constrexcl.h"
++#include "optimizer/restrictinfo.h"
++#include "utils/datum.h"
++#include "utils/lsyscache.h"
++
++static bool
++extract_operands(OpExpr *expr, Var **out_var, Const **out_const)
++{
++}
++
++bool 
++is_mutually_exclusive(OpExpr *left, OpExpr *right)
++{
++}
++
++static void
++collapse_mutually_exclusive_quals_for_rel(PlannerInfo *root, RelOptInfo *rel)
++{
++}
++
++void 
++collapse_mutually_exclusive_quals(PlannerInfo *root)
++{
++}
+diff --git a/src/include/optimizer/constrexcl.h b/src/include/optimizer/constrexcl.h
+new file mode 100644
+index 0000000000..f2a64697ea
+--- /dev/null
++++ b/src/include/optimizer/constrexcl.h
+@@ -0,0 +1,10 @@
++#ifndef CONSTRECXL_H
++#define CONSTRECXL_H
++
++#include "nodes/primnodes.h"
++#include "nodes/pathnodes.h"
++
++extern bool is_mutually_exclusive(OpExpr *left, OpExpr *right);
++extern void collapse_mutually_exclusive_quals(PlannerInfo *info);
++
++#endif
+\ No newline at end of file

@@ -1,0 +1,141 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Setup",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/setup.sh",
+            "detail": "Setup environment for development, run ./configure script",
+            "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/build.sh",
+            "args": [
+                "-j",
+                "${input:threads}"
+            ],
+            "problemMatcher": [],
+            "detail": "Run build and install DB with all contribs",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Run DB",
+            "detail": "Run and init DB",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/run.sh",
+            "args": [
+                "--init-db",
+                "--run-db"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run psql",
+            "detail": "Run psql",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/run.sh",
+            "args": [
+                "--init-db",
+                "--run-db",
+                "--psql"
+            ],
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "Stop DB",
+            "detail": "Stop running DB",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/run.sh",
+            "args": [
+                "--stop-db"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Run terminal",
+            "detail": "Run terminal with imported environment variables specific to environment",
+            "type": "shell",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "shared",
+                "showReuseMessage": false,
+                "clear": false
+            },
+            "command": "/usr/bin/sh",
+            "args": [
+                "-c",
+                ". ${workspaceFolder}/dev/pg_dev_config.sh; $SHELL"
+            ],
+            "problemMatcher": [],
+            "isBackground": true
+        },
+        {
+            "label": "Test regress",
+            "detail": "Run regression tests (make check)",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/test.sh",
+            "args": [
+                "--regress"
+            ],
+            "problemMatcher": [],
+            "group": {
+                "kind": "test",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Test full",
+            "detail": "Run all tests: regress, tap, isolation etc... (make check-world)",
+            "type": "process",
+            "command": "${workspaceFolder}/dev/test.sh",
+            "args": [
+                "--full"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean build",
+            "detail": "Clean object files and other artifacts created during build",
+            "type": "shell",
+            "command": "${workspaceFolder}/dev/clean.sh",
+            "args": [
+                "--build"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean full",
+            "detail": "Clean build artifacts and reset source tree to default state",
+            "type": "shell",
+            "command": "${workspaceFolder}/dev/clean.sh",
+            "args": [
+                "--full"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Get backend pid",
+            "type": "shell",
+            "hide": true,
+            "command": "${workspaceFolder}/get_current_backend_pid.sh",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+            "id": "threads",
+            "type": "pickString",
+            "options": [ "1", "2", "3", "4", "5", "6", "7", "8" ],
+            "default": "7",
+            "description": "Number of threads to use"        
+        }
+    ]
+}

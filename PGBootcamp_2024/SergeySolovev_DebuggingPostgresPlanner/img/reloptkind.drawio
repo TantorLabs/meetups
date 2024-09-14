@@ -1,0 +1,42 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.8 Chrome/128.0.6613.36 Electron/32.0.1 Safari/537.36" version="24.7.8">
+  <diagram name="Страница — 1" id="Zvr2eW7H0rXLNG6UFAMz">
+    <mxGraphModel dx="1644" dy="338" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <UserObject label="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#990488&quot;&gt;RTE_RELATION&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#990488&quot;&gt;RTE_SUBQUERY&lt;/font&gt;&lt;/div&gt;&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#990488&quot;&gt;RTE_FUNCTION&lt;/font&gt;&lt;/div&gt;" link="explain select t1.value, max(t1.id) from tbl t1&#xa;join&#xa;(select id from tbl where value = 1 or value = 2) t2&#xa;using (id)&#xa;group by t1.value&#xa;having count(t1.id) &gt; 100;" id="kUs3Db5WDIcYfd_g8coe-1">
+          <mxCell style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;shadow=0;horizontal=1;spacing=2;fontSize=14;" parent="1" vertex="1">
+            <mxGeometry x="-80" y="145" width="120" height="65" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="kUs3Db5WDIcYfd_g8coe-2" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="40" y="145" width="20" height="65" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#425dc0&quot;&gt;RELOPT_BASEREL&lt;/font&gt;&lt;/div&gt;" link="explain select t1.value, max(t1.id) from tbl t1&#xa;join&#xa;(select id from tbl where value = 1 or value = 2) t2&#xa;using (id)&#xa;group by t1.value&#xa;having count(t1.id) &gt; 100;" id="kUs3Db5WDIcYfd_g8coe-3">
+          <mxCell style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;shadow=0;horizontal=1;spacing=2;fontSize=14;" parent="1" vertex="1">
+            <mxGeometry x="60" y="145" width="140" height="65" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <UserObject label="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#990488&quot;&gt;RTE_JOIN&lt;/font&gt;&lt;/div&gt;" link="explain select t1.value, max(t1.id) from tbl t1&#xa;join&#xa;(select id from tbl where value = 1 or value = 2) t2&#xa;using (id)&#xa;group by t1.value&#xa;having count(t1.id) &gt; 100;" id="kUs3Db5WDIcYfd_g8coe-4">
+          <mxCell style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;shadow=0;horizontal=1;spacing=2;fontSize=14;" parent="1" vertex="1">
+            <mxGeometry x="-80" y="236.5" width="120" height="65" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="kUs3Db5WDIcYfd_g8coe-5" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;labelPosition=right;verticalLabelPosition=middle;align=left;verticalAlign=middle;" parent="1" vertex="1">
+          <mxGeometry x="40" y="236.5" width="20" height="65" as="geometry" />
+        </mxCell>
+        <UserObject label="&lt;div style=&quot;font-size: 14px;&quot;&gt;&lt;font color=&quot;#425dc0&quot;&gt;RELOPT_JOINREL&lt;/font&gt;&lt;/div&gt;" link="explain select t1.value, max(t1.id) from tbl t1&#xa;join&#xa;(select id from tbl where value = 1 or value = 2) t2&#xa;using (id)&#xa;group by t1.value&#xa;having count(t1.id) &gt; 100;" id="kUs3Db5WDIcYfd_g8coe-6">
+          <mxCell style="text;html=1;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;shadow=0;horizontal=1;spacing=2;fontSize=14;" parent="1" vertex="1">
+            <mxGeometry x="60" y="236.5" width="140" height="65" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="kUs3Db5WDIcYfd_g8coe-7" value="&lt;div&gt;&lt;b&gt;RangeTblEntry&lt;/b&gt;&lt;/div&gt;RTEKind" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="-70" y="90" width="100" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="kUs3Db5WDIcYfd_g8coe-8" value="&lt;div&gt;&lt;b&gt;RelOptInfo&lt;/b&gt;&lt;/div&gt;RelOptKind" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="90" y="100" width="80" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

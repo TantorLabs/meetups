@@ -1,0 +1,177 @@
+diff --git a/src/backend/optimizer/plan/planmain.c b/src/backend/optimizer/plan/planmain.c
+index 7afd434c60..732bf21bbc 100644
+--- a/src/backend/optimizer/plan/planmain.c
++++ b/src/backend/optimizer/plan/planmain.c
+@@ -22,6 +22,7 @@
+ 
+ #include "optimizer/appendinfo.h"
+ #include "optimizer/clauses.h"
++#include "optimizer/constrexcl.h"
+ #include "optimizer/inherit.h"
+ #include "optimizer/optimizer.h"
+ #include "optimizer/orclauses.h"
+@@ -185,6 +186,8 @@ query_planner(PlannerInfo *root,
+ 
+ 	joinlist = deconstruct_jointree(root);
+ 
++	collapse_mutually_exclusive_quals(root);
++
+ 	/*
+ 	 * Reconsider any postponed outer-join quals now that we have built up
+ 	 * equivalence classes.  (This could result in further additions or
+diff --git a/src/backend/optimizer/util/Makefile b/src/backend/optimizer/util/Makefile
+index 4fb115cb11..1dede12757 100644
+--- a/src/backend/optimizer/util/Makefile
++++ b/src/backend/optimizer/util/Makefile
+@@ -15,6 +15,7 @@ include $(top_builddir)/src/Makefile.global
+ OBJS = \
+ 	appendinfo.o \
+ 	clauses.o \
++	constrexcl.o \
+ 	inherit.o \
+ 	joininfo.o \
+ 	orclauses.o \
+diff --git a/src/backend/optimizer/util/clauses.c b/src/backend/optimizer/util/clauses.c
+index 62650995cb..55388ce796 100644
+--- a/src/backend/optimizer/util/clauses.c
++++ b/src/backend/optimizer/util/clauses.c
+@@ -36,6 +36,7 @@
+ #include "nodes/subscripting.h"
+ #include "nodes/supportnodes.h"
+ #include "optimizer/clauses.h"
++#include "optimizer/constrexcl.h"
+ #include "optimizer/cost.h"
+ #include "optimizer/optimizer.h"
+ #include "optimizer/plancat.h"
+diff --git a/src/backend/optimizer/util/constrexcl.c b/src/backend/optimizer/util/constrexcl.c
+new file mode 100644
+index 0000000000..39c8263014
+--- /dev/null
++++ b/src/backend/optimizer/util/constrexcl.c
+@@ -0,0 +1,109 @@
++#include "postgres.h"
++
++#include "catalog/pg_operator.h"
++#include "nodes/makefuncs.h"
++#include "nodes/pg_list.h"
++#include "optimizer/constrexcl.h"
++#include "optimizer/restrictinfo.h"
++#include "utils/datum.h"
++#include "utils/lsyscache.h"
++
++static bool
++extract_operands(OpExpr *expr, Var **out_var, Const **out_const)
++{
++	List *args = expr->args;
++	if (list_length(args) != 2)
++	{
++		return false;
++	}
++
++	if (!IsA(linitial(args), Var))
++	{
++		return false;
++	}
++
++	if (!IsA(llast(args), Const))
++	{
++		return false;
++	}
++
++	*out_var = (Var *)linitial(args);
++	*out_const = (Const *)llast(args);
++	return true;
++}
++
++bool is_mutually_exclusive(OpExpr *left, OpExpr *right)
++{
++	Var *left_var;
++	Const *left_const;
++	Var *right_var;
++	Const *right_const;
++
++	if (!extract_operands(left, &left_var, &left_const))
++	{
++		return false;
++	}
++
++	if (!extract_operands(right, &right_var, &right_const))
++	{
++		return false;
++	}
++
++	if (!equal(left_var, right_var))
++	{
++		return false;
++	}
++
++	if (!equal(left_const, right_const))
++	{
++		return false;
++	}
++
++	return get_negator(left->opno) == right->opno;
++}
++
++static void
++collapse_mutually_exclusive_quals_for_rel(PlannerInfo *root, RelOptInfo *rel)
++{
++	ListCell *lc;
++	RestrictInfo *prev_rinfo;
++
++	if (list_length(rel->baserestrictinfo) < 2)
++	{
++		return;
++	}
++
++	prev_rinfo = (RestrictInfo *)linitial(rel->baserestrictinfo);
++	for_each_from(lc, rel->baserestrictinfo, 1)
++	{
++		RestrictInfo *cur_rinfo = (RestrictInfo *)lfirst(lc);
++
++		if (IsA(prev_rinfo->clause, OpExpr) && IsA(cur_rinfo->clause, OpExpr))
++		{
++			if (is_mutually_exclusive((OpExpr *)prev_rinfo->clause, (OpExpr *)cur_rinfo->clause))
++			{
++				RestrictInfo *false_rinfo = make_restrictinfo(root,
++															  (Expr *)makeBoolConst(false, false),
++															  false, false, false, false,
++															  0, NULL, NULL, NULL);
++				rel->baserestrictinfo = list_make1(false_rinfo);
++				return;
++			}
++		}
++
++		prev_rinfo = cur_rinfo;
++	}
++}
++
++void collapse_mutually_exclusive_quals(PlannerInfo *root)
++{
++	for (size_t i = 1; i < root->simple_rel_array_size; i++)
++	{
++		RelOptInfo *rel = root->simple_rel_array[i];
++
++		if (rel != NULL && rel->reloptkind == RELOPT_BASEREL)
++		{
++			collapse_mutually_exclusive_quals_for_rel(root, rel);
++		}
++	}
++}
+diff --git a/src/include/optimizer/constrexcl.h b/src/include/optimizer/constrexcl.h
+new file mode 100644
+index 0000000000..f2a64697ea
+--- /dev/null
++++ b/src/include/optimizer/constrexcl.h
+@@ -0,0 +1,10 @@
++#ifndef CONSTRECXL_H
++#define CONSTRECXL_H
++
++#include "nodes/primnodes.h"
++#include "nodes/pathnodes.h"
++
++extern bool is_mutually_exclusive(OpExpr *left, OpExpr *right);
++extern void collapse_mutually_exclusive_quals(PlannerInfo *info);
++
++#endif
+\ No newline at end of file

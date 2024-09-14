@@ -1,0 +1,49 @@
+<mxfile host="Electron" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.7.5 Chrome/126.0.6478.183 Electron/31.3.0 Safari/537.36" version="24.7.5">
+  <diagram name="Страница — 1" id="2v40PeW_zky-KTwpgmpZ">
+    <mxGraphModel dx="1176" dy="487" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="IA497KA6AKTzBHj8USVQ-1" value="Preprocess" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=3;fontFamily=Courier New;fontSize=14;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="24" y="310" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="IA497KA6AKTzBHj8USVQ-4" value="Optimize" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=3;fontFamily=Courier New;fontSize=14;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="254" y="310" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="IA497KA6AKTzBHj8USVQ-15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;fontSize=12;strokeWidth=2;" parent="1" source="IA497KA6AKTzBHj8USVQ-5" target="IA497KA6AKTzBHj8USVQ-6" edge="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="IA497KA6AKTzBHj8USVQ-5" value="Paths" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=3;fontFamily=Courier New;fontSize=14;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="484" y="310" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="IA497KA6AKTzBHj8USVQ-6" value="Plan" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;strokeWidth=3;fontFamily=Courier New;fontSize=14;fillColor=none;" parent="1" vertex="1">
+          <mxGeometry x="714" y="310" width="90" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="IA497KA6AKTzBHj8USVQ-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;fontSize=12;strokeWidth=2;" parent="1" source="IA497KA6AKTzBHj8USVQ-4" target="IA497KA6AKTzBHj8USVQ-5" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="444" y="470" as="sourcePoint" />
+            <mxPoint x="568" y="470" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="IA497KA6AKTzBHj8USVQ-19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;sourcePerimeterSpacing=8;targetPerimeterSpacing=8;fontSize=12;strokeWidth=2;" parent="1" source="IA497KA6AKTzBHj8USVQ-1" target="IA497KA6AKTzBHj8USVQ-4" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="130" y="350" as="sourcePoint" />
+            <mxPoint x="254" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="qcgIqEkFac_rqw39D9TF-19" value="Предобработка&lt;div&gt;дерева запроса&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;" parent="1" vertex="1">
+          <mxGeometry x="11" y="430" width="116" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj0egJGHMidgvWOcq3kx-1" value="Обогащение и&lt;div&gt;обработка&lt;div&gt;информации&lt;div&gt;о запросе&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="241" y="410" width="116" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj0egJGHMidgvWOcq3kx-2" value="Нахождение&lt;div&gt;всех возможных&lt;/div&gt;&lt;div&gt;&lt;div&gt;путей&lt;/div&gt;&lt;div&gt;выполнения&lt;/div&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="471" y="410" width="116" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="Lj0egJGHMidgvWOcq3kx-3" value="Создание плана&lt;div&gt;выполнения&lt;/div&gt;&lt;div&gt;из самого&lt;/div&gt;&lt;div&gt;дешевого пути&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="701" y="410" width="116" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
